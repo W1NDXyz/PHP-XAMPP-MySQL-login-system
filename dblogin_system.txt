@@ -1,0 +1,27 @@
+this is a copy SQL code from phpmyadmin database
+
+USE dblogin_system;
+
+CREATE TABLE IF NOT EXISTS users(
+	id INT AUTO_INCREMENT NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    status ENUM('active','inactive','suspended') DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    PRIMARY KEY(id),
+    UNIQUE KEY unique_email(email),
+    UNIQUE KEY unique_username(username)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+------- below is the explanation of ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci; ----------------
+
+
+| Setting | Purpose | Recommendation |
+|---|---|---|
+| `ENGINE=InnoDB` | Database engine; supports transactions, foreign keys, row-level locking | ✅ Use it |
+| `DEFAULT CHARSET=utf8mb4` | Supports Unicode, including many international characters and emoji | ✅ Use it |
+| `COLLATE=utf8mb4_unicode_ci` | Determines how text is compared/sorted | ✅ Good default |

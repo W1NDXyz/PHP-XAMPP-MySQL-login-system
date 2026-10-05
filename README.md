@@ -292,7 +292,7 @@ Browser
 The browser eventually receives something similar to:
 
 ```html
-Hello Tun Feng
+Hello Max
 ```
 
 This is an important distinction between **client-side** and **server-side** programming.
@@ -306,8 +306,8 @@ This is an important distinction between **client-side** and **server-side** pro
 PHP variables begin with `$`.
 
 ```php
-$name = "Tun Feng";
-$age = 21;
+$name = "Max";
+$age = 33;
 ```
 
 Example:
@@ -315,7 +315,7 @@ Example:
 ```php
 <?php
 
-$name = "Tun Feng";
+$name = "Max";
 
 echo "Hello " . $name;
 
@@ -325,7 +325,7 @@ echo "Hello " . $name;
 Output:
 
 ```text
-Hello Tun Feng
+Hello Max
 ```
 
 ---
@@ -962,7 +962,7 @@ This allows the database structure to be reproduced on another machine.
 ```php
 <?php
 
-$name = "Tun Feng";
+$name = "Max";
 
 echo "Hello " . $name;
 
@@ -1273,7 +1273,7 @@ This makes a login system a useful beginner project because it introduces many o
 
 # 👨‍💻 Author
 
-**FOO TUN FENG**
+**W1NDX**
 
 Diploma in Information Technology  
 Focus: Application & Web Development

@@ -1,4 +1,6 @@
 <?php
+//PHP sessions allow the server to remember information about the current user between different requests.
+session_start();
 
 require_once "../config/database.php";
 
@@ -15,7 +17,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     $user = $stmt->fetch();
 
     if($user && password_verify($password, $user["password_hash"])){
-        echo "Login Successfull!";
+        
+        $_SESSION["user_id"] = $user["id"];
+        $_SESSION["username"] = $user["username"];
+
+        header("Location: dashboard.php");
+        exit;
+        
     } else {
         echo "Invalid email or password.";
     }

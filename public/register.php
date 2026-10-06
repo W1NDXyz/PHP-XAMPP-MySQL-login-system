@@ -1,14 +1,45 @@
 <?php
 
+$errors = [];
+
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-    $username = $_POST["username"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    
-    echo "Username: " . $username . "<br>";
-    echo "Email: " . $email . "<br>";
-    echo"Password: " . $password . "<br>";
+    // ?? means null coalescing operator
+    $username = trim($_POST["username"] ?? "");
+    $email = trim($_POST["email"] ?? "");
+    $password = $_POST["password"] ?? "";
+
+    //Username validation
+        //=== means strict comparison
+    if($username === ""){
+        $errors[] = "Username is required.";
+    }
+
+    //Email Validation
+    if($email === "" ){
+        $errors[] = "Email is required.";
+    }elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $errors[] = "Please enter a valid email address.";
+    }
+
+    //Password Validation
+    if($password === ""){
+        $errors[] = "Password is required.";
+    }elseif(strlen($password) < 8){  //strlen() calculates the length of a string
+        $errors[] = "Password must be at least 8 characters.";
+    }
+
+    if(empty($errors)){
+        //No errors, proceed with registration logic
+        echo "<p>Registration successful!</p>";
+    }else{
+        //Display errors
+        echo "<ul>";
+        foreach($errors as $error){
+            echo "<li>$error</li>";
+        }
+        echo "</ul>";
+    }
 
 }
 

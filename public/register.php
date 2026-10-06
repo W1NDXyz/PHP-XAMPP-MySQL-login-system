@@ -1,5 +1,6 @@
 <?php
 
+require_once "../config/database.php";
 $errors = [];
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -31,7 +32,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if(empty($errors)){
         //No errors, proceed with registration logic
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+        //SQL statment to insert user data into the database
+        $sql = "INSERT INTO users (username, email, password_hash)
+                VALUES (?,?,?)";
+
+        //prepare sql
+        $stmt = $pdo->prepare($sql);
+
+        //execute SQL with user data
+        $stmt->execute([
+            $username,
+            $email,
+            $password_hash
+        ]);
+
+
         echo "<p>Registration successful!</p>";
+
     }else{
         //Display errors
         echo "<ul>";

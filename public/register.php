@@ -1,6 +1,13 @@
 <?php
 
+session_start();  //creates a new session to store csrf token inside 
+
 require_once "../config/database.php";
+
+if(!isset($_SESSION["csrf_token"])){
+    $_SESSION["csrf_token"] = bin2hex(random_bytes(32)); //This generates 32 cryptographically secure random bytes
+} //generate a random token using random_bytes() and convert it to a hexadecimal representation using bin2hex(). This token is stored in the session variable $_SESSION["csrf_token"].
+
 $errors = [];
 $success = "";
 
@@ -10,6 +17,12 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     $username = trim($_POST["username"] ?? "");
     $email = trim($_POST["email"] ?? "");
     $password = $_POST["password"] ?? "";
+    $csrf_token = $_POST["csrf_token"] ?? "";
+
+    // CSRF Token Validation
+    if($csrf_token !== $_SESSION["csrf_token"]){
+        $errors[] = "Invalid CSRF token.";
+    }
 
     //Username validation
         //=== means strict comparison
@@ -107,6 +120,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     <form method="POST" action="register.php">
     <!--method = POST ,When the user submits this form, send the form data using an HTTP POST request.-->
+
+        <input
+            type="hidden"
+            name="csrf_token"
+            value="<?php echo htmlspecialchars($_SESSION["csrf_token"]);?>"
+        >
+        <!--hidden input field is used to include the CSRF token in the form submission. This token is generated on the server side and stored in the user's session. When the form is submitted, the server can compare the submitted token with the one stored in the session to verify that the request is legitimate and not a CSRF attack.-->
+
         <div>
             <label for="username">Username</label>
             <input

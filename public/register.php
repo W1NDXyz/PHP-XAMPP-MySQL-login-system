@@ -20,7 +20,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     $csrf_token = $_POST["csrf_token"] ?? "";
 
     // CSRF Token Validation
-    if($csrf_token !== $_SESSION["csrf_token"]){
+    if(!hash_equals($_SESSION["csrf_token"], $csrf_token)){
         $errors[] = "Invalid CSRF token.";
     }
 

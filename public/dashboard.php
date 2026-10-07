@@ -18,14 +18,14 @@ exit;
     <title>Dashboard</title>
 </head>
 <body>
-    <h1>Dashboard</h1>
+    <h1><?php echo htmlspecialchars("Dashboard"); ?></h1>
 
     <p>
         Welcome, <?php echo htmlspecialchars($_SESSION["username"]); ?>!
     </p>
     <!--force display in text not HTML or JavaScript-->
 
-    <p>You are successfully logged in.</p>
+    <p><?php echo htmlspecialchars("You are successfully logged in."); ?></p>
 
     <a href="logout.php">Logout</a>
 

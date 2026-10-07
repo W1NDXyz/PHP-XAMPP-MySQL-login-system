@@ -35,10 +35,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
         try{
         //No errors, proceed with registration logic
-            $password_hash = password_hash(
+            $password_hash = password_hash( 
                 $password, 
                 PASSWORD_DEFAULT
             );
+            //converts the password into a secure hash using a strong one-way hashing algorithm
 
             //SQL statment to insert user data into the database
             $sql = "INSERT INTO users (username, email, password_hash)

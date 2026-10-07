@@ -23,6 +23,7 @@ exit;
     <p>
         Welcome, <?php echo htmlspecialchars($_SESSION["username"]); ?>!
     </p>
+    <!--force display in text not HTML or JavaScript-->
 
     <p>You are successfully logged in.</p>
 

@@ -1,4 +1,4 @@
-<DOCTYPE html>
+<DOCTYPE html> <!--test login php file-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">

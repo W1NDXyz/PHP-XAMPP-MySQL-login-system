@@ -4,8 +4,16 @@ session_start();
 
 require_once "../config/database.php";
 
+$_SESSION["login_attempts"] = $_SESSION["login_attempts"] ?? 0;
+$_SESSION["login_blocked_until"] = $_SESSION["login_blocked_until"] ?? 0;
+
 if(!isset($_SESSION["csrf_token"])){
     $_SESSION["csrf_token"] = bin2hex(random_bytes(32)); //This generates 32 cryptographically secure random bytes
+}
+
+if(time() < $_SESSION["login_blocked_until"]){
+    echo "<p> Too many failed attempts. Please try again later.</p>";
+    exit;
 }
 
 
@@ -28,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     if($user && password_verify($password, $user["password_hash"])){
 
         if(password_needs_rehash( $user["password_hash"], PASSWORD_DEFAULT)){
-            $new_hassh = password_hash(
+            $new_hash = password_hash(
                 $password,
                 PASSWORD_DEFAULT
             );
@@ -44,7 +52,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             ]);
         }
 
-
+        $_SESSION["login_attempts"] = 0;
+        $_SESSION["login_blocked_until"] = 0;
 
         session_regenerate_id(true);
         
@@ -55,7 +64,16 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         exit;
         
     } else {
-        echo htmlspecialchars("Invalid email or password.");
+        // login attemps block logic
+        $_SESSION["login_attempts"]++;
+
+        if($_SESSION["login_attempts"] >= 5){
+            $_SESSION["login_blocked_until"] = time() + 60;
+            echo"<p> Too many failed attempts. Please try again in 60 seconds. </p>";
+            exit;
+        }
+
+    echo htmlspecialchars("Invalid email or password.");
     }
 
 }

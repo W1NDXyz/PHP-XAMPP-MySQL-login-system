@@ -1,12 +1,6 @@
 <?php
 
-session_set_cookie_params([
-    "httponly" => true,
-    "secure" => false,
-    "samesite" => "Lax"
-]);
-
-session_start();
+require_once "../includes/session.php";
 
 if(!isset($_SESSION["user_id"])){
 

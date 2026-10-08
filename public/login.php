@@ -1,15 +1,6 @@
 <?php
 
-// Set session cookie parameters for security
-session_set_cookie_params([
-    "httponly" => true,
-    "secure" => false,
-    "samesite" => "Lax"
-]);
-
-//PHP sessions allow the server to remember information about the current user between different requests.
-session_start();
-
+require_once "../includes/session.php";
 require_once "../config/database.php";
 
 $_SESSION["login_attempts"] = $_SESSION["login_attempts"] ?? 0;

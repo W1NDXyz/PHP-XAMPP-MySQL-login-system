@@ -1,5 +1,11 @@
 <?php
 
+session_set_cookie_params([
+    "httponly" => true,
+    "secure" => false,
+    "samesite" => "Lax"
+]);
+
 session_start();  //creates a new session to store csrf token inside 
 
 require_once "../config/database.php";

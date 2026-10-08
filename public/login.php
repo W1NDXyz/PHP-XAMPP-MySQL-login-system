@@ -4,12 +4,21 @@ session_start();
 
 require_once "../config/database.php";
 
-//$errors =[];
+if(!isset($_SESSION["csrf_token"])){
+    $_SESSION["csrf_token"] = bin2hex(random_bytes(32)); //This generates 32 cryptographically secure random bytes
+}
+
 
 if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     $email = trim($_POST["email"] ?? "");
     $password = $_POST["password"] ?? "";
+    $csrf_token = $_POST["csrf_token"] ?? "";
+
+    if(!hash_equals($_SESSION["csrf_token"], $csrf_token)){
+        echo "<p> Invalid CSRF token. </p>";
+        exit;
+    }
 
     $sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $pdo->prepare($sql);
@@ -22,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         
         $_SESSION["user_id"] = $user["id"];
         $_SESSION["username"] = $user["username"];
-
+        
         header("Location: dashboard.php");
         exit;
         
@@ -53,6 +62,12 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     <h1>Login</h1>
 
     <form method="POST" action="login.php">
+
+        <input
+            type = "hidden"
+            name = "csrf_token"
+            value="<?php echo htmlspecialchars($_SESSION["csrf_token"]); ?>"
+        >
 
         <div>
 

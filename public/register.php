@@ -42,6 +42,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         $errors[] = "Password is required.";
     }elseif(strlen($password) < 8){  //strlen() calculates the length of a string
         $errors[] = "Password must be at least 8 characters.";
+    }elseif(strlen($password) > 72){
+        $errors[] = "Password must not exceed 72 characters.";
     }
 
     if(empty($errors)){
@@ -158,6 +160,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 type="password"
                 id="password"
                 name="password"
+                minlength="8"
+                maxlength="72"
                 required
             >
         </div>

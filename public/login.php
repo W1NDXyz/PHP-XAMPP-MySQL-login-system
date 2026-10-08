@@ -27,6 +27,25 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     if($user && password_verify($password, $user["password_hash"])){
 
+        if(password_needs_rehash( $user["password_hash"], PASSWORD_DEFAULT)){
+            $new_hassh = password_hash(
+                $password,
+                PASSWORD_DEFAULT
+            );
+
+            $sql = "UPDATE users
+                SET password_hash = ?
+                WHERE id =?";
+                
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                $new_hash,
+                $user["id"]
+            ]);
+        }
+
+
+
         session_regenerate_id(true);
         
         $_SESSION["user_id"] = $user["id"];

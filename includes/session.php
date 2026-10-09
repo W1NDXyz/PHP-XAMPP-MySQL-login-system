@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__."/security_hearders.php";
+
 session_set_cookie_params([
     "httponly" => true,
     "secure" => false,

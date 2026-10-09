@@ -34,6 +34,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     if($user && password_verify($password, $user["password_hash"])){
 
+        if($user["status"] !== "active"){
+            echo "<p> This account is not permitted to log in.</p>";
+            exit;
+        }
+
         if(password_needs_rehash( $user["password_hash"], PASSWORD_DEFAULT)){
             $new_hash = password_hash(
                 $password,

@@ -1,6 +1,6 @@
 # 🔐 PHP & XAMPP Login System
 
-> A beginner-friendly authentication system built with **PHP, Apache, MySQL, HTML, CSS, and JavaScript**, developed locally using **XAMPP**.
+> A beginner-friendly authentication system built with **PHP, Apache, MySQL/MariaDB, HTML, CSS, and JavaScript**, developed locally using **XAMPP**.
 
 ![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![Apache](https://img.shields.io/badge/Apache-Web%20Server-D22128?style=for-the-badge&logo=apache&logoColor=white)
@@ -14,529 +14,414 @@
 
 ## 📌 Project Overview
 
-This project is a simple **user authentication system** created to understand how a traditional PHP backend communicates with a MySQL database.
+This project is a PHP-based user authentication system developed to understand how a web application processes user input, communicates with a relational database, and manages authenticated sessions.
 
-The project starts from a basic login form and gradually develops into a more secure authentication system.
+Starting from the fundamentals of PHP and HTML forms, the project has evolved to incorporate security practices commonly used in backend development.
 
-The main purpose is not only to make a login page work, but to understand the complete backend flow:
+The main objective is not simply to create a working login page, but to understand the complete authentication process.
+
+### 🔄 Authentication Flow
 
 ```text
-User
- │
- │ Enter username + password
- ▼
-┌─────────────────────┐
-│    Login Form       │
-│     HTML/CSS        │
-└──────────┬──────────┘
-           │
-           │ HTTP POST
-           ▼
-┌─────────────────────┐
-│     PHP Backend     │
-│                     │
-│ • Receive input     │
-│ • Validate input    │
-│ • Process login     │
-└──────────┬──────────┘
-           │
-           │ SQL Query
-           ▼
-┌─────────────────────┐
-│       MySQL         │
-│                     │
-│      users          │
-│ ┌─────────────────┐ │
-│ │ id              │ │
-│ │ username        │ │
-│ │ password_hash   │ │
-│ └─────────────────┘ │
-└──────────┬──────────┘
-           │
-           │ User record
-           ▼
-┌─────────────────────┐
-│     PHP Backend     │
-│                     │
-│ password_verify()   │
-└──────────┬──────────┘
-           │
-       ┌───┴────┐
-       │        │
-    Success    Failed
-       │        │
-       ▼        ▼
-  Dashboard   Error
+                 User
+                  │
+                  ▼
+           Login / Register
+                  │
+                  │ HTTP POST
+                  ▼
+          ┌───────────────┐
+          │  PHP Backend  │
+          │               │
+          │ Input Checks  │
+          │ CSRF Check    │
+          └───────┬───────┘
+                  │
+                  ▼
+          ┌───────────────┐
+          │ PDO Database  │
+          │   Queries     │
+          └───────┬───────┘
+                  │
+                  ▼
+          ┌───────────────┐
+          │ MySQL /       │
+          │ MariaDB       │
+          └───────┬───────┘
+                  │
+                  ▼
+          Verify Password Hash
+                  │
+             ┌────┴────┐
+             ▼         ▼
+           Valid     Invalid
+             │         │
+             ▼         ▼
+        Create       Reject
+        Session      Login
+             │
+             ▼
+       Protected Dashboard
 ```
 
 ---
 
-# 🎯 Project Objectives
-
-The project is designed around several learning objectives.
+## 🎯 Project Objectives
 
 | # | Objective | Description |
-|---|---|---|
-| 1 | PHP Fundamentals | Understand PHP syntax, variables, conditions, functions and server-side execution |
-| 2 | HTTP | Understand GET, POST, requests and responses |
-| 3 | Form Handling | Learn how PHP receives data submitted from HTML forms |
-| 4 | Database | Learn how MySQL stores application data |
+|---:|---|---|
+| 1 | PHP Fundamentals | Understand variables, conditions, functions, arrays, and server-side execution |
+| 2 | HTTP | Understand GET, POST, requests, and responses |
+| 3 | Form Handling | Process and validate data submitted through HTML forms |
+| 4 | Database | Design a relational database and manage user records |
 | 5 | Database Connectivity | Connect PHP to MySQL using PDO |
-| 6 | Authentication | Build a functional login and registration system |
-| 7 | Password Security | Store passwords using secure hashing |
-| 8 | Sessions | Maintain authenticated user sessions |
-| 9 | Security | Understand SQL Injection, XSS, CSRF and authentication security |
-| 10 | Backend Architecture | Learn how frontend, backend and database components interact |
+| 6 | Authentication | Implement user registration and login |
+| 7 | Password Security | Hash and verify passwords securely |
+| 8 | Session Management | Maintain and protect authenticated sessions |
+| 9 | Web Security | Learn about SQL injection, XSS, CSRF, and session security |
+| 10 | Backend Architecture | Understand how frontend, backend, and database components interact |
 
 ---
 
-# 🧠 What I Am Learning
+## 🧠 What I Am Learning
 
-This project is being developed as a practical foundation for **Full Stack Development, Backend Development, and Cybersecurity**.
-
-The main technologies and concepts are:
+This project provides a practical foundation for **Backend Development, Full Stack Development, and Cybersecurity**.
 
 ```text
-                    Web Application
-                          │
-          ┌───────────────┼───────────────┐
-          ▼               ▼               ▼
-       Frontend         Backend        Database
-          │               │               │
-       HTML/CSS          PHP             MySQL
-          │               │               │
-     JavaScript          PDO          SQL Queries
-                          │
-                          ▼
-                     Authentication
-                          │
-              ┌───────────┼───────────┐
-              ▼           ▼           ▼
-           Sessions    Hashing      Security
+                  Web Application
+                         │
+           ┌─────────────┼─────────────┐
+           ▼             ▼             ▼
+        Frontend       Backend      Database
+           │             │             │
+        HTML / CSS      PHP        MySQL
+           │             │             │
+       JavaScript       PDO        SQL Queries
+                         │
+                         ▼
+                   Authentication
+                         │
+            ┌────────────┼────────────┐
+            ▼            ▼            ▼
+         Sessions      Hashing      Security
 ```
+
+The learning process follows a practical cycle:
+
+**Learn → Build → Test → Review → Improve**
 
 ---
 
-# 🛠️ Technology Stack
+## 🛠️ Technology Stack
 
 | Technology | Purpose |
 |---|---|
-| **PHP** | Server-side programming and backend logic |
-| **Apache** | Web server used to execute PHP |
-| **MySQL** | Relational database |
-| **phpMyAdmin** | Web interface for managing MySQL |
-| **HTML5** | Page structure |
-| **CSS3** | User interface styling |
+| **PHP** | Server-side programming and authentication logic |
+| **Apache** | Web server provided by XAMPP |
+| **MySQL / MariaDB** | Relational database for user records |
+| **phpMyAdmin** | Browser-based database management |
+| **PDO** | PHP database access layer with prepared statements |
+| **HTML5** | Web page structure and forms |
+| **CSS3** | Interface styling |
 | **JavaScript** | Client-side interactions |
-| **PDO** | PHP database access layer |
 | **XAMPP** | Local development environment |
 | **Git** | Version control |
 | **GitHub** | Source code hosting and documentation |
+| **Gitleaks** | Local and Git-history secret scanning |
 
 ---
 
-# 🖥️ Development Environment
+## 🖥️ Development Environment
 
-The project runs locally using XAMPP.
+The application is developed locally on Windows using XAMPP.
 
 ```text
 Windows
    │
    ▼
-┌─────────────────────────────┐
-│            XAMPP            │
-│                             │
-│  ┌───────────┐ ┌─────────┐ │
-│  │  Apache   │ │  MySQL  │ │
-│  └─────┬─────┘ └────┬────┘ │
-└────────┼─────────────┼──────┘
-         │             │
-         ▼             ▼
-       PHP           Database
-         │             │
-         └──────┬──────┘
-                ▼
-          Web Application
+  XAMPP
+   │
+   ├── Apache
+   │     │
+   │     ▼
+   │    PHP
+   │     │
+   │     └─────────────┐
+   │                   │
+   └── MySQL / MariaDB │
+                       ▼
+                 Web Application
+                       │
+                       ▼
+                Authentication
 ```
 
-### Default local URL
+### Local application URL
 
 ```text
-http://localhost/
+http://localhost/1.PHP+Xampp/public/login.php
 ```
+
+> This URL is for the current local directory layout. It is not a public production deployment.
 
 ---
 
-# 📂 Project Structure
+## 📂 Project Structure
 
-The project will gradually evolve into the following structure:
+The current project is organized into configuration, database, shared backend logic, and public-facing pages.
 
 ```text
-login-system/
+1.PHP+Xampp/
 │
 ├── config/
 │   └── database.php
 │
-├── public/
-│   ├── index.php
-│   ├── login.php
-│   ├── register.php
-│   ├── dashboard.php
-│   └── logout.php
-│
-├── includes/
-│   ├── auth.php
-│   ├── header.php
-│   └── footer.php
-│
-├── css/
-│   └── style.css
-│
-├── js/
-│   └── script.js
-│
 ├── database/
 │   └── database.sql
 │
+├── includes/
+│   ├── auth.php
+│   ├── security_headers.php
+│   └── session.php
+│
+├── public/
+│   ├── css/
+│   ├── js/
+│   ├── dashboard.php
+│   ├── login.php
+│   ├── logout.php
+│   └── register.php
+│
+├── .gitignore
 └── README.md
 ```
 
-> **Note:** The structure will be introduced progressively during development. The initial version of the project may contain fewer files.
+### Directory responsibilities
+
+| Directory / File | Responsibility |
+|---|---|
+| `config/database.php` | Creates the PDO database connection |
+| `database/database.sql` | Defines the database schema |
+| `includes/auth.php` | Checks authentication and account status |
+| `includes/security_headers.php` | Applies selected HTTP security headers |
+| `includes/session.php` | Centralizes session configuration and timeout handling |
+| `public/login.php` | Processes login requests |
+| `public/register.php` | Processes registration requests |
+| `public/dashboard.php` | Displays the protected dashboard |
+| `public/logout.php` | Ends the authenticated session |
+| `public/css/` | Contains stylesheet assets |
+| `public/js/` | Contains JavaScript assets |
+| `.gitignore` | Excludes selected local files from Git |
+
+**Architecture note:** For stronger isolation, a production deployment should configure the web server's document root to point to `public/`, keeping configuration and shared PHP files outside the publicly served directory.
 
 ---
 
-# 🔄 Application Pipeline
+## 🔄 Application Pipeline
 
-The complete authentication pipeline is:
+A typical login request follows this sequence:
 
 ```text
-┌──────────────┐
-│    Browser   │
-└──────┬───────┘
-       │
-       │ HTTP Request
-       ▼
-┌──────────────┐
-│    Apache    │
-│  Web Server  │
-└──────┬───────┘
-       │
-       │ Execute PHP
-       ▼
-┌──────────────┐
-│     PHP      │
-│   Backend    │
-└──────┬───────┘
-       │
-       │ PDO
-       ▼
-┌──────────────┐
-│    MySQL     │
-│   Database   │
-└──────┬───────┘
-       │
-       │ Result
-       ▼
-┌──────────────┐
-│     PHP      │
-│ Authentication│
-└──────┬───────┘
-       │
-       ▼
-┌────────────────────────┐
-│ Session / Response     │
-└───────────┬────────────┘
-            │
-            ▼
-        Dashboard
+01. User opens the login page
+              ↓
+02. Browser sends an HTTP GET request
+              ↓
+03. Apache receives the request
+              ↓
+04. PHP generates the page
+              ↓
+05. User submits login credentials
+              ↓
+06. Browser sends an HTTP POST request
+              ↓
+07. PHP validates the request and CSRF token
+              ↓
+08. PDO queries the database
+              ↓
+09. PHP verifies the stored password hash
+              ↓
+10. PHP checks the account status
+              ↓
+11. Session ID is regenerated
+              ↓
+12. Authenticated session is established
+              ↓
+13. User is redirected to the dashboard
 ```
+
+If authentication fails, the application rejects the login and returns an appropriate error message.
 
 ---
 
-# 🌐 How PHP Works
+## 🌐 How PHP Works
 
-PHP is a **server-side programming language**.
-
-For example:
-
-```php
-<?php
-
-$name = "Tun Feng";
-
-echo "Hello " . $name;
-
-?>
-```
-
-The browser does not execute the PHP code directly.
-
-Instead:
-
-```text
-Browser
-   │
-   │ Request
-   ▼
-Apache
-   │
-   │ Execute
-   ▼
-PHP
-   │
-   │ Generate HTML
-   ▼
-Browser
-```
-
-The browser eventually receives something similar to:
-
-```html
-Hello Max
-```
-
-This is an important distinction between **client-side** and **server-side** programming.
-
----
-
-# 🧩 PHP Fundamentals
-
-## Variables
-
-PHP variables begin with `$`.
-
-```php
-$name = "Max";
-$age = 33;
-```
+PHP is a **server-side programming language**. It executes on the web server, not directly in the browser.
 
 Example:
 
 ```php
 <?php
 
-$name = "Max";
+$name = "W1NDX";
 
 echo "Hello " . $name;
 
 ?>
 ```
 
-Output:
+The browser receives the generated output:
 
 ```text
-Hello Max
+Hello W1NDX
 ```
+
+The execution flow is:
+
+```text
+Browser Request
+      │
+      ▼
+    Apache
+      │
+      ▼
+      PHP
+      │
+      ▼
+Generated HTML Response
+      │
+      ▼
+    Browser
+```
+
+This is the key distinction between server-side programming and client-side technologies such as HTML, CSS, and JavaScript.
 
 ---
 
-## Conditional Statements
+## 🗄️ Database Design
 
-PHP can make decisions using `if` and `else`.
+The application uses a database named `dblogin_system` and a `users` table.
 
-```php
-<?php
-
-$username = "admin";
-
-if ($username == "admin") {
-    echo "Welcome Admin";
-} else {
-    echo "Welcome User";
-}
-
-?>
-```
-
-Authentication systems rely heavily on conditional logic.
-
-For example:
-
-```text
-Is the user authenticated?
-        │
-    ┌───┴───┐
-   YES      NO
-    │        │
-    ▼        ▼
-Dashboard   Login
-```
-
----
-
-# 📮 HTTP POST
-
-Login forms normally use the `POST` method.
-
-Example:
-
-```html
-<form method="POST">
-
-    <input type="text" name="username">
-
-    <input type="password" name="password">
-
-    <button type="submit">
-        Login
-    </button>
-
-</form>
-```
-
-PHP can receive the submitted information through:
-
-```php
-$username = $_POST["username"];
-$password = $_POST["password"];
-```
-
-The request flow becomes:
-
-```text
-User enters data
-       │
-       ▼
-HTML Form
-       │
-       │ POST
-       ▼
-PHP
-       │
-       ▼
-$_POST
-       │
-       ▼
-Backend processing
-```
-
----
-
-# 🗄️ Database Design
-
-The authentication system will use a `users` table.
-
-## Users Table
+### Users table
 
 | Column | Type | Purpose |
 |---|---|---|
 | `id` | INT | Unique user identifier |
-| `username` | VARCHAR | User's username |
-| `email` | VARCHAR | User's email address |
-| `password_hash` | VARCHAR | Securely hashed password |
-| `created_at` | TIMESTAMP | Account creation time |
+| `username` | VARCHAR(50) | Unique username |
+| `email` | VARCHAR(100) | Unique email address |
+| `password_hash` | VARCHAR(255) | Stores the password hash |
+| `status` | ENUM | Account status: `active`, `inactive`, or `suspended` |
+| `create_at` | TIMESTAMP | Account creation time |
+| `update_at` | TIMESTAMP | Last automatic update time |
+
+The table uses **InnoDB** and **utf8mb4**.
 
 Conceptually:
 
 ```text
-users
-│
-├── id
-├── username
-├── email
-├── password_hash
-└── created_at
+dblogin_system
+      │
+      ▼
+    users
+      │
+      ├── id
+      ├── username
+      ├── email
+      ├── password_hash
+      ├── status
+      ├── create_at
+      └── update_at
 ```
 
 Example record:
 
 | id | username | email | password_hash |
 |---:|---|---|---|
-| 1 | admin | admin@example.com | `$2y$...` |
+| 1 | example_user | user@example.com | `$2y$...` |
 
-> The actual password should **never** be stored as plain text.
+The displayed hash is illustrative, not a real account credential.
+
+> **Important:** Passwords must not be stored as plaintext. The database stores a password hash generated by PHP.
 
 ---
 
-# 🔐 Password Security
+## 🔐 Password Security
 
-One of the most important concepts in this project is password security.
+Password hashing is one of the core security features of this project.
 
-### ❌ Bad approach
+### ❌ Insecure approach
 
 ```text
-username: admin
-password: 123456
+username: example_user
+password: mypassword123
 ```
 
-Storing this directly in the database is unsafe.
+Saving the original password directly in the database exposes users if the database is compromised.
 
-### ✅ Correct approach
+### ✅ Recommended approach
 
-The password is transformed using a password hashing algorithm:
+PHP provides `password_hash()` to create a password hash and `password_verify()` to verify a submitted password.
 
 ```text
 User Password
-     │
-     │ password_hash()
-     ▼
+      │
+      ▼
+password_hash()
+      │
+      ▼
 Password Hash
-     │
-     ▼
+      │
+      ▼
 Database
 ```
 
 During login:
 
 ```text
-User enters password
+Submitted Password
         │
         ▼
-Retrieve password hash
+Retrieve Stored Hash
         │
         ▼
 password_verify()
         │
-    ┌───┴───┐
-   TRUE    FALSE
+    ┌───┴────┐
+    ▼        ▼
+  Valid    Invalid
     │        │
     ▼        ▼
- Login     Reject
+ Continue   Reject
 ```
 
-PHP provides:
-
-```php
-password_hash()
-```
-
-for creating secure password hashes and:
-
-```php
-password_verify()
-```
-
-for verifying passwords.
+The application also uses `password_needs_rehash()` to determine whether an existing password hash should be upgraded.
 
 ---
 
-# 🛡️ SQL Injection Protection
+## 🛡️ SQL Injection Protection
 
-The project will use **PDO prepared statements** rather than directly inserting user input into SQL queries.
+The application uses **PDO prepared statements** for database queries involving user input.
 
-### ❌ Unsafe
+### ❌ Unsafe example
 
 ```php
-$sql = "SELECT * FROM users
-        WHERE username = '$username'";
+$sql = "SELECT * FROM users WHERE email = '$email'";
 ```
 
-User input is being inserted directly into the SQL statement.
+Directly inserting user-controlled input into an SQL statement can allow an attacker to alter the query.
 
-### ✅ Safer
+### ✅ Safer approach
 
 ```php
-$sql = "SELECT * FROM users
-        WHERE username = :username";
+$sql = "SELECT * FROM users WHERE email = :email";
 
 $stmt = $pdo->prepare($sql);
 
 $stmt->execute([
-    "username" => $username
+    "email" => $email
 ]);
 ```
 
-The principle is:
+Prepared statements separate SQL structure from parameter values, helping prevent SQL injection through those parameters.
 
 ```text
 User Input
@@ -545,782 +430,325 @@ User Input
 Prepared Statement
     │
     ▼
-Database
+Database Query
 ```
-
-This helps protect the application against **SQL Injection**.
 
 ---
 
-# 🔑 Authentication vs Authorization
+## 🔑 Authentication vs Authorization
 
-These two concepts are important in backend development.
+These concepts serve different purposes.
 
 | Concept | Meaning | Example |
 |---|---|---|
-| Authentication | Who are you? | Login with username/password |
-| Authorization | What are you allowed to do? | Admin can delete users |
+| Authentication | Verifies who the user is | Checking login credentials |
+| Authorization | Determines what the user may do | Restricting an administrative action |
 
-Example:
+The current application checks authentication and verifies that the user's account remains active.
 
-```text
-User
- │
- │ Login
- ▼
-Authentication
- │
- ▼
-Who is this user?
- │
- ▼
-Authorization
- │
- ├── Normal User
- │
- └── Administrator
-```
-
-The login system primarily starts with **authentication**, while authorization will be introduced later.
+More advanced role-based authorization can be added in a future iteration.
 
 ---
 
-# 🍪 Sessions
+## 🍪 Session Management
 
-HTTP is stateless.
+HTTP is stateless. PHP sessions allow the application to associate subsequent requests with an authenticated user.
 
-Without a session, PHP does not automatically remember that the user logged in.
-
-We will use PHP sessions:
-
-```php
-session_start();
-
-$_SESSION["user_id"] = $user["id"];
-```
-
-The concept is:
+Conceptually:
 
 ```text
 Login
   │
   ▼
-Credentials verified
+Verify Credentials
   │
   ▼
-Create Session
+Regenerate Session ID
   │
   ▼
-Session contains user ID
+Store Authenticated User ID
   │
   ▼
-User accesses Dashboard
+Access Dashboard
   │
   ▼
-PHP checks Session
+Check Session and Account Status
 ```
 
-If the session does not exist:
+The session implementation includes:
 
-```text
-Dashboard
-   │
-   ▼
-Session exists?
-   │
- ┌─┴──┐
-YES   NO
- │     │
- ▼     ▼
-Allow  Login
-```
+- HTTP-only session cookies.
+- `SameSite=Lax` cookie configuration.
+- Session ID regeneration after successful login.
+- An idle timeout.
+- Centralized session initialization.
+
+The current local HTTP configuration does not enable the `Secure` cookie flag. HTTPS deployments should use secure cookie settings.
 
 ---
 
-# 🚪 Logout
+## 🚪 Logout
 
-When the user logs out, the session should be destroyed.
-
-Conceptually:
+Logging out should invalidate the authenticated session so that subsequent requests cannot continue using it.
 
 ```text
 Dashboard
     │
     ▼
- Logout
+  Logout
     │
     ▼
-Destroy Session
+Invalidate Session
     │
     ▼
-Login Page
+Redirect to Login
 ```
 
-Example:
-
-```php
-session_start();
-
-session_unset();
-session_destroy();
-
-header("Location: login.php");
-exit;
-```
+The application destroys the session during logout. Future hardening can include CSRF protection for the logout action and explicit expiration of the session cookie.
 
 ---
 
-# 🧱 Authentication Architecture
+## 🛡️ Security Features
 
-The intended architecture is:
+The project incorporates several security practices during development.
 
-```text
-                 ┌───────────────┐
-                 │    Browser    │
-                 └───────┬───────┘
-                         │
-                         ▼
-                 ┌───────────────┐
-                 │  Login Page   │
-                 │ HTML + CSS    │
-                 └───────┬───────┘
-                         │
-                      POST
-                         │
-                         ▼
-                 ┌───────────────┐
-                 │  PHP Backend  │
-                 └───────┬───────┘
-                         │
-             ┌───────────┼───────────┐
-             │           │           │
-             ▼           ▼           ▼
-        Validation      PDO      Authentication
-                         │
-                         ▼
-                 ┌───────────────┐
-                 │     MySQL     │
-                 │    users      │
-                 └───────────────┘
-                         │
-                         ▼
-                  Password Hash
-                         │
-                         ▼
-                 password_verify()
-                         │
-                    ┌────┴────┐
-                    ▼         ▼
-                  Valid     Invalid
-                    │         │
-                    ▼         ▼
-                 Session    Error
-                    │
-                    ▼
-                Dashboard
-```
-
----
-
-# 📋 Development Roadmap
-
-The project will be developed in stages.
-
-| Phase | Topic | Status |
-|---|---|---|
-| 01 | XAMPP installation | 🟡 Learning |
-| 02 | PHP fundamentals | 🟡 Learning |
-| 03 | HTML login form | 🟡 Learning |
-| 04 | HTTP GET / POST | 🟡 Learning |
-| 05 | MySQL database | ⬜ Planned |
-| 06 | PHP → MySQL connection | ⬜ Planned |
-| 07 | Registration | ⬜ Planned |
-| 08 | Password hashing | ⬜ Planned |
-| 09 | Login authentication | ⬜ Planned |
-| 10 | PHP sessions | ⬜ Planned |
-| 11 | Dashboard | ⬜ Planned |
-| 12 | Logout | ⬜ Planned |
-| 13 | Input validation | ⬜ Planned |
-| 14 | SQL Injection protection | ⬜ Planned |
-| 15 | XSS protection | ⬜ Planned |
-| 16 | CSRF protection | ⬜ Planned |
-| 17 | Authentication security | ⬜ Planned |
-| 18 | Project documentation | ⬜ Planned |
-
----
-
-# 📊 Current Project Progress
-
-```text
-PHP Fundamentals       ██████████░░░░░░░░░░  50%
-HTML Forms             ████████░░░░░░░░░░░░  40%
-HTTP / POST            ██████░░░░░░░░░░░░░░  30%
-MySQL                  ░░░░░░░░░░░░░░░░░░░░   0%
-PDO                    ░░░░░░░░░░░░░░░░░░░░   0%
-Authentication         ░░░░░░░░░░░░░░░░░░░░   0%
-Sessions               ░░░░░░░░░░░░░░░░░░░░   0%
-Security               ░░░░░░░░░░░░░░░░░░░░   0%
-```
-
-> Progress percentages are personal learning milestones, not application test coverage.
-
----
-
-# 🧪 Testing Strategy
-
-The project will eventually include basic functional and security testing.
-
-| Test Area | Example |
+| Feature | Purpose |
 |---|---|
-| Valid Login | Correct username + password |
-| Invalid Login | Incorrect password |
-| Empty Input | Username/password missing |
-| Invalid Username | Unknown account |
-| SQL Injection | Malicious SQL input |
-| XSS | Script injection attempt |
-| Session | Access dashboard without login |
-| Logout | Session correctly destroyed |
-| Password | Password is never stored as plaintext |
+| Password hashing | Avoids storing plaintext passwords |
+| PDO prepared statements | Helps prevent SQL injection |
+| Input validation | Rejects invalid registration data |
+| Output escaping | Helps prevent reflected or stored XSS when used in the appropriate output context |
+| CSRF tokens | Protects supported state-changing forms against cross-site request forgery |
+| Session ID regeneration | Helps prevent session fixation during login |
+| Session timeout | Ends sessions after a period of inactivity |
+| Account-status checks | Prevents inactive or suspended accounts from authenticating |
+| Login rate limiting | Limits repeated failed attempts within the implemented session-based mechanism |
+| Generic login errors | Avoids unnecessarily revealing whether an account exists |
+| Security headers | Applies selected browser security policies |
+| Error logging | Keeps detailed database exceptions out of user-facing responses |
+| Secret scanning | Uses Gitleaks to scan files and Git history for potential secrets |
 
-Example authentication test:
+### Security testing notes
 
-```text
-                    Login Request
-                         │
-                         ▼
-                 Validate Input
-                         │
-                         ▼
-                 Find User
-                         │
-                         ▼
-              Verify Password Hash
-                         │
-                  ┌──────┴──────┐
-                  ▼             ▼
-                Valid          Invalid
-                  │             │
-                  ▼             ▼
-               Session         Error
-                  │
-                  ▼
-              Dashboard
-```
+Gitleaks reported no leaks in the scans previously run against the working directory and Git history. This is a useful check, but it does not prove that the application is free from all secrets or security vulnerabilities.
+
+The login rate limiter is session-based and is a learning implementation, not a complete production-grade defense against distributed attacks.
+
+> This project is intended for learning and local development. It has not been represented as independently audited or production-ready.
 
 ---
 
-# ⚠️ Security Considerations
+## 🧪 Testing Strategy
 
-Security is treated as part of the development process rather than something added at the end.
+The following areas have been tested during development, according to the project's development notes.
 
-The project will focus on:
+| Test Area | Expected Result |
+|---|---|
+| Registration validation | Invalid or missing input is rejected |
+| Duplicate account | Existing username or email is handled |
+| Password hashing | Password is stored as a hash |
+| Valid login | Correct credentials establish a session |
+| Invalid login | Incorrect credentials are rejected |
+| CSRF validation | Invalid or missing tokens are rejected on protected forms |
+| SQL injection | User input is handled through prepared statements |
+| XSS output | User-controlled output is escaped where appropriate |
+| Protected dashboard | Unauthenticated access is redirected |
+| Account status | Non-active accounts are rejected |
+| Session ID regeneration | Session ID changes after successful login |
+| Idle timeout | An expired idle session is invalidated on a subsequent request |
+| Logout | Authenticated session is destroyed |
+| Security headers | Selected headers are returned by the server |
 
-### 1. Password Hashing
-
-Never store plaintext passwords.
-
-```php
-password_hash()
-password_verify()
-```
-
-### 2. Prepared Statements
-
-Protect database queries against SQL Injection.
-
-```php
-$pdo->prepare();
-```
-
-### 3. Input Validation
-
-Never blindly trust user input.
-
-```text
-User Input
-    ↓
-Validate
-    ↓
-Sanitize / Process
-    ↓
-Application
-```
-
-### 4. Session Security
-
-Authentication state must be managed carefully.
-
-### 5. XSS Protection
-
-Output should be escaped appropriately when displaying user-controlled data.
-
-### 6. CSRF Protection
-
-State-changing requests should use CSRF protection.
-
-### 7. Error Handling
-
-Sensitive information should not be exposed through error messages.
+These checks describe the project's reported testing, not a substitute for a comprehensive security assessment.
 
 ---
 
-# 🧰 Local Setup
+## 🧰 Local Setup
 
-## 1. Install XAMPP
+### 1. Install XAMPP
 
-Install XAMPP with:
+Install XAMPP with Apache, PHP, MySQL/MariaDB, and phpMyAdmin.
 
-- Apache
-- MySQL
-- PHP
-- phpMyAdmin
+### 2. Start the services
 
----
-
-## 2. Start Apache and MySQL
-
-Open the XAMPP Control Panel.
-
-Start:
+Open the XAMPP Control Panel and start:
 
 ```text
 Apache  → Running
 MySQL   → Running
 ```
 
----
+### 3. Place the project in `htdocs`
 
-## 3. Create Project Directory
-
-Place the project inside:
+The current project directory is:
 
 ```text
-C:\xampp\htdocs\
+C:\xampp\htdocs\1.PHP+Xampp\
 ```
 
-For example:
+### 4. Create the database
+
+1. Open `http://localhost/phpmyadmin/`.
+2. Import `database/database.sql`.
+3. Confirm that the `dblogin_system` database and `users` table exist.
+
+If the SQL file does not create the database automatically, create `dblogin_system` first and then import the table definition.
+
+### 5. Check the database configuration
+
+Open `config/database.php` and verify the host, database name, username, and password for your local XAMPP installation.
+
+A typical local configuration may use `localhost` and the XAMPP `root` account. A blank root password is a local-development convention in some installations, not a recommended production setting.
+
+### 6. Open the application
+
+Visit:
 
 ```text
-C:\xampp\htdocs\login-system\
+http://localhost/1.PHP+Xampp/public/login.php
 ```
 
----
-
-## 4. Open the Project
-
-Open:
-
-```text
-http://localhost/login-system/
-```
-
----
-
-# 📦 Database Setup
-
-The database will eventually be created using phpMyAdmin.
-
-Example database:
-
-```text
-login_system
-```
-
-Example table:
-
-```text
-users
-```
-
-Basic relationship:
-
-```text
-login_system
-     │
-     ▼
-   users
-     │
- ┌───┼──────────────────┐
- ▼   ▼                  ▼
-id username        password_hash
-```
-
-A SQL export file will eventually be stored here:
-
-```text
-database/database.sql
-```
-
-This allows the database structure to be reproduced on another machine.
+You can register a test account and then test login, dashboard access, and logout.
 
 ---
 
-# 🔧 Example PHP Code
+## 🧭 Development Progress
 
-## Basic PHP
+The project has progressed beyond the initial PHP form stage.
 
-```php
-<?php
+| Phase | Topic | Status |
+|---|---|---|
+| 01 | XAMPP and local environment | ✅ Completed |
+| 02 | PHP fundamentals and form handling | ✅ Practiced |
+| 03 | Database schema and PDO connection | ✅ Implemented |
+| 04 | Registration and validation | ✅ Implemented |
+| 05 | Password hashing and verification | ✅ Implemented |
+| 06 | Login and session authentication | ✅ Implemented |
+| 07 | Protected dashboard and logout | ✅ Implemented |
+| 08 | CSRF protection for registration and login | ✅ Implemented |
+| 09 | SQL injection and output-escaping practices | ✅ Implemented |
+| 10 | Session configuration and idle timeout | ✅ Implemented |
+| 11 | Account-status authorization checks | ✅ Implemented |
+| 12 | Security headers and cache-control headers | ✅ Implemented |
+| 13 | Secret scanning with Gitleaks | ✅ Scanned |
+| 14 | Comprehensive automated security testing | ⬜ Future improvement |
+| 15 | HTTPS deployment and production hardening | ⬜ Future improvement |
 
-$name = "Max";
-
-echo "Hello " . $name;
-
-?>
-```
-
----
-
-## Conditional Logic
-
-```php
-<?php
-
-$username = "admin";
-
-if ($username == "admin") {
-
-    echo "Welcome Admin";
-
-} else {
-
-    echo "Welcome User";
-
-}
-
-?>
-```
+Statuses describe development progress and reported checks; they do not imply that every possible edge case has been verified.
 
 ---
 
-## Receiving POST Data
+## 🚀 Future Improvements
 
-```php
-<?php
+Potential improvements include:
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-
-    echo "Username: " . $username;
-
-}
-
-?>
-```
-
-> This example is for learning the HTTP request flow. Production authentication should additionally validate input and avoid directly displaying untrusted data.
+- [ ] Add automated tests for authentication and session behavior.
+- [ ] Add CSRF protection to the logout action.
+- [ ] Review session-cookie expiration and cleanup behavior.
+- [ ] Improve login rate limiting beyond session-based tracking.
+- [ ] Add password reset with secure, time-limited tokens.
+- [ ] Add user profile management.
+- [ ] Introduce role-based authorization if required.
+- [ ] Review Content Security Policy (CSP) before deployment.
+- [ ] Configure HTTPS and production cookie settings.
+- [ ] Configure Apache so only the `public/` directory is web-accessible.
+- [ ] Add structured security and authentication event logging.
+- [ ] Perform a documented security review before any public deployment.
 
 ---
 
-# 🧭 Request Lifecycle
-
-A typical login request follows this sequence:
-
-```text
-01. User opens login page
-            ↓
-02. Browser sends HTTP GET
-            ↓
-03. Apache receives request
-            ↓
-04. Apache executes PHP
-            ↓
-05. PHP generates HTML
-            ↓
-06. Browser displays login page
-            ↓
-07. User enters credentials
-            ↓
-08. Browser sends HTTP POST
-            ↓
-09. PHP receives $_POST
-            ↓
-10. PHP validates input
-            ↓
-11. PHP queries MySQL
-            ↓
-12. MySQL returns user
-            ↓
-13. PHP verifies password
-            ↓
-14. Session is created
-            ↓
-15. User is redirected
-            ↓
-16. Dashboard
-```
-
-Understanding this lifecycle is one of the primary goals of this project.
-
----
-
-# 📚 Key Concepts Learned
-
-By completing this project, I aim to understand:
+## 📚 Key Concepts Learned
 
 ```text
 PHP
-├── Variables
-├── Data Types
-├── Conditions
-├── Loops
-├── Functions
-├── Arrays
-├── Forms
-├── GET / POST
-├── Sessions
+├── Variables and Conditions
+├── Functions and Arrays
+├── Forms and Request Methods
 └── Error Handling
 
-MySQL
-├── Database
-├── Tables
-├── Primary Keys
-├── INSERT
-├── SELECT
-├── UPDATE
-├── DELETE
-└── Relationships
+Database
+├── Relational Schema
+├── Primary and Unique Keys
+├── SQL Queries
+└── PDO Prepared Statements
 
-Backend
-├── HTTP
-├── Routing
-├── Validation
-├── Authentication
-├── Authorization
-└── Sessions
-
-Security
+Authentication
+├── Registration
 ├── Password Hashing
-├── SQL Injection
-├── XSS
-├── CSRF
+├── Password Verification
+├── Session Management
+└── Account Status Checks
+
+Web Security
+├── SQL Injection Prevention
+├── XSS Output Escaping
+├── CSRF Protection
 ├── Session Security
-└── Input Validation
+├── Rate Limiting
+└── HTTP Security Headers
 ```
 
 ---
 
-# 🎓 Learning Philosophy
+## 🎓 Learning Philosophy
 
-This project follows a **learn → build → test → secure** workflow.
+This project follows a simple development cycle:
 
 ```text
-        ┌─────────────┐
-        │   LEARN     │
-        │ Understand  │
-        │ the concept │
-        └──────┬──────┘
-               │
-               ▼
-        ┌─────────────┐
-        │    BUILD    │
-        │ Implement   │
-        │ the feature │
-        └──────┬──────┘
-               │
-               ▼
-        ┌─────────────┐
-        │    TEST     │
-        │ Check normal│
-        │ + bad input │
-        └──────┬──────┘
-               │
-               ▼
-        ┌─────────────┐
-        │   SECURE    │
-        │ Fix security│
-        │ weaknesses  │
-        └──────┬──────┘
-               │
-               └──────────► Repeat
+       ┌─────────────┐
+       │    LEARN    │
+       │ Understand  │
+       │ the concept │
+       └──────┬──────┘
+              ▼
+       ┌─────────────┐
+       │    BUILD    │
+       │ Implement   │
+       │ the feature │
+       └──────┬──────┘
+              ▼
+       ┌─────────────┐
+       │    TEST     │
+       │ Check normal│
+       │ and bad input│
+       └──────┬──────┘
+              ▼
+       ┌─────────────┐
+       │   IMPROVE   │
+       │ Review and  │
+       │ fix issues  │
+       └──────┬──────┘
+              └────────► Repeat
 ```
 
-The objective is to understand **why the code works**, rather than simply copying code from tutorials.
+The objective is to understand **why the code works, how it can fail, and how to improve its security**, rather than simply copying code from tutorials.
 
 ---
 
-# 🚀 Future Improvements
-
-Potential future features include:
-
-- [ ] User registration
-- [ ] Login
-- [ ] Logout
-- [ ] User dashboard
-- [ ] Remember-me functionality
-- [ ] Forgot password
-- [ ] Password reset
-- [ ] User profile
-- [ ] Role-based authorization
-- [ ] Admin dashboard
-- [ ] Login attempt tracking
-- [ ] Account lockout / rate limiting
-- [ ] CSRF tokens
-- [ ] Improved session security
-- [ ] Audit logging
-- [ ] Responsive UI
-- [ ] REST API
-- [ ] Deployment to a production server
-
----
-
-# 📈 Project Evolution
-
-The project is intentionally developed from simple concepts toward a more realistic backend system.
-
-```text
-Stage 1
-Basic PHP
-   │
-   ▼
-Stage 2
-HTML + PHP
-   │
-   ▼
-Stage 3
-Forms + POST
-   │
-   ▼
-Stage 4
-MySQL
-   │
-   ▼
-Stage 5
-PDO
-   │
-   ▼
-Stage 6
-Registration
-   │
-   ▼
-Stage 7
-Password Hashing
-   │
-   ▼
-Stage 8
-Login Authentication
-   │
-   ▼
-Stage 9
-Sessions
-   │
-   ▼
-Stage 10
-Security Hardening
-   │
-   ▼
-Stage 11
-Production-Ready Architecture
-```
-
----
-
-# 💡 Why This Project Matters
-
-A login page may look simple from the frontend:
-
-```text
-┌─────────────────────────┐
-│        LOGIN            │
-│                         │
-│ Username                │
-│ ┌─────────────────────┐ │
-│ │                     │ │
-│ └─────────────────────┘ │
-│                         │
-│ Password                │
-│ ┌─────────────────────┐ │
-│ │ •••••••••           │ │
-│ └─────────────────────┘ │
-│                         │
-│      [ LOGIN ]          │
-│                         │
-└─────────────────────────┘
-```
-
-However, the backend involves several important concepts:
-
-```text
-Frontend
-   │
-   ▼
-HTTP
-   │
-   ▼
-PHP
-   │
-   ├── Validation
-   │
-   ├── Authentication
-   │
-   ├── Sessions
-   │
-   ▼
-PDO
-   │
-   ▼
-MySQL
-   │
-   ▼
-Security
-```
-
-This makes a login system a useful beginner project because it introduces many of the fundamental concepts required for professional backend development.
-
----
-
-# 👨‍💻 Author
+## 👨‍💻 Author
 
 **W1NDX**
 
 Diploma in Information Technology  
 Focus: Application & Web Development
 
-Current learning direction:
+Current learning interests:
 
-- Full Stack Development
-- Backend Development
+- Backend and Full Stack Development
 - Cybersecurity
-- PHP
-- MySQL
+- PHP and MySQL
 - Web Application Security
 
 ---
 
-# 📄 License
+## 📄 Project Purpose
 
-This project is created primarily for **learning and educational purposes**.
-
-You are welcome to study, modify, and extend the project.
+This repository is primarily a learning project for local development and experimentation. It is not a claim of production readiness or an independent security audit.
 
 ---
 
-# ⭐ Learning Goals
+## ⭐ Learning Goals
 
 > **Build it. Understand it. Test it. Secure it.**
 
-The final goal is not simply to create a working login page.
-
-The goal is to understand how a web application works from:
-
-```text
-Browser
-   ↓
-HTTP
-   ↓
-Web Server
-   ↓
-PHP
-   ↓
-Database
-   ↓
-Authentication
-   ↓
-Session
-   ↓
-Security
-```
-
-and eventually apply these principles to larger full-stack and cybersecurity projects.
+The goal is to understand how the browser, HTTP, web server, PHP backend, database, authentication, and session security work together—and to use those foundations in more advanced software development and cybersecurity projects.

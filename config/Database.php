@@ -25,6 +25,10 @@ try {
 
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
+
+    http_response_code(500);
+    exit("A server error occurred. Please try again later.");
+    //to avoid internal information explot such as database nam, server details
 }
 
 ?>

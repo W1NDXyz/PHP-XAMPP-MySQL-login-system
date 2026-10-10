@@ -1,0 +1,23 @@
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# IDE and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary and debug files
+*.log
+*.tmp
+
+# Local database backups and dumps
+*.sql.bak
+*.sql.gz
+
+# Dependencies, if added in the future
+/vendor/
+node_modules/
